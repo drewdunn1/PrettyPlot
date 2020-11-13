@@ -33,6 +33,7 @@ var drawPlot = function(counties,target,
             return "unemployment";        
         }
     })//tooltip on
+    .attr("transform", "translate(10,-10)")
     .on("mouseenter" ,function(county)
       {
         
@@ -70,6 +71,21 @@ var makeTranslateString = function(x,y)
 var drawAxes = function(graphDim,margins,
                          xScale,yScale)
 {
+    var xAxis = d3.axisBottom(xScale);
+    var yAxis = d3.axisLeft(yScale);
+    
+    
+    var axes = d3.select("svg")
+    .append("g")
+    axes.append("g")
+    .attr("transform","translate("+(margins.left+10)+","+(margins.top+graphDim.height-10)+")")
+    .call(xAxis)
+axes.append("g")
+    .attr("transform","translate("+(margins.left+10)+","+(margins.top-10)+")")
+    .call(yAxis)
+    
+    
+ 
    
  
 }
@@ -77,32 +93,70 @@ var drawAxes = function(graphDim,margins,
 
 //graphDim -object that stores dimensions of the graph area
 //margins - objedct that stores the size of the margins
+var aString = "string"
 var drawLabels = function(graphDim,margins)
 {
+    var labels = d3.select("svg")
+    .append("g")
+    .classed("labels",true)
     
+labels.append("text")
+    .text("Trump Support")
+    .classed("title",true)
+    .attr("text-anchor", "middle")
+    .attr("x",margins.left+(graphDim.width/2))
+    .attr("y",margins.top+20)
+labels.append("g")
+    .classed("label",true)
+    .attr("text-anchor", "middle")
+    .attr("transform", "rotate(90)")
+labels.append("text")
+    .text("Percent White")
+    .classed("label",true)
+    .attr("text-anchor", "middle")
+    .attr("x", margins.left+(graphDim.width/2)+10)
+    .attr("y",margins.top+(graphDim.height+20))
+          
+    console.log(graphDim.height);
+    console.log(margins.left);
 }
+d3.select(".rotated")
+    .text("Percentage Voting Trump")
+    .classed("label",true)
+    .attr("text-anchor", "middle")
+    .attr("x", 30)
+    .attr("y",500)
 
 
-var drawLegend = function(graphDim,margins)
+    
+    var drawLegend = function(graphDim,margins)
 {
+    var legend = d3.select("svg")
+    .append("g")
+    .classed("labels",true)
     
- 
-   var categories = [
-       {
-           class:"lessCollege",
-           name:"Less College"
-       },
-       {
-           class:"unemployment",
-           name:"High unemployment"
-       }
-    ]
+legend.append("text")
+    .text("Less College")
+    .classed("lesscollege",true)
+    .attr("text-anchor", "middle")
+    .attr("x",margins.left+(graphDim.width)-100)
+    .attr("y",margins.top)
+legend.append("text")
+    .text("Unemployment")
+    .classed("unemployment",true)
+    .attr("text-anchor", "middle")
+    .attr("x", margins.left+(graphDim.width)-100)
+    .attr("y",margins.top+20)
+    
+    
+};
+    
+   
 
+    
+    
+    
 
-    
-    
-    
-}
 
 //sets up several important variables and calls the functions for the visualization.
 var initGraph = function(counties)

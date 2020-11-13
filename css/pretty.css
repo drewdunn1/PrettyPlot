@@ -1,3 +1,9 @@
+.rotated{
+    position: fixed;
+    left: -85px;
+    bottom: 400px;
+    transform: rotate(90deg);
+}
 #tooltip.hidden
 {
     display:none;
